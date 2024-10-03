@@ -1,0 +1,222 @@
+-- 1- Listar veterinários com especialidade em Dermatologia
+SELECT * 
+FROM VETERINARIO v 
+WHERE v.especialidade = 'Dermatologista';
+
+-- 2- Listar pacientes com idade entre 2 e 5 anos
+SELECT * 
+FROM PACIENTE p 
+WHERE p.idade BETWEEN 2 AND 5;
+
+-- 3- Listar agendamentos entre 1º de janeiro de 2024 e 31 de março de 2024
+SELECT * 
+FROM AGENDAMENTO a 
+WHERE a.DATA_HORA BETWEEN '2024-01-01' AND '2024-03-31';
+
+-- 4- Listar medicamentos com preço superior a 25 reais
+SELECT * 
+FROM MEDICAMENTOS m 
+WHERE m.preco > 25.00;
+
+-- 5- Listar receitas emitidas após 1º de junho de 2024 para o veterinário "Dr. Ana Souza"
+SELECT * 
+FROM RECEITA r 
+WHERE data_emissao > '2024-06-01' 
+  AND id_agendamento IN (
+      SELECT id_agendamento 
+      FROM AGENDAMENTO a 
+      WHERE id_veterinario = (
+          SELECT id_veterinario 
+          FROM VETERINARIO v 
+          WHERE nome = 'Dr. Ana Souza'
+      )
+  );
+
+-- 6- Listar pacientes que pertencem ao tutor "Maria Silva"
+SELECT * 
+FROM PACIENTE p 
+WHERE ID_TUTOR = (
+    SELECT ID_TUTOR 
+    FROM TUTOR t 
+    WHERE NOME = 'Maria Silva'
+);
+
+-- 7- Listar receitas que incluem o medicamento "Anti-inflamatório Y"
+
+SELECT *
+FROM RECEITA r
+WHERE ID_AGENDAMENTO = (
+SELECT ID_AGENDAMENTO 
+FROM MEDICAMENTOS m 
+WHERE nome = 'Anti-inflamatório Y');
+
+-- 9- Listar agendamentos realizados pelo veterinário "Dr. Pedro Lima" e com o motivo "Exame de sangue"
+SELECT * 
+FROM AGENDAMENTO a 
+WHERE ID_VETERINARIO = (
+    SELECT ID_VETERINARIO 
+    FROM VETERINARIO v 
+    WHERE v.nome = 'Dr. Pedro Lima'
+) 
+AND a.MOTIVO = 'Exame de sangue';
+
+-- 10- Listar medicamentos com descrição não nula e preço inferior a 50 reais
+SELECT * 
+FROM MEDICAMENTOS 
+WHERE DESCRICAO IS NOT NULL 
+  AND PRECO < 50.00;
+
+-- 11- Listar pacientes com peso entre 3 e 10 kg
+SELECT * 
+FROM PACIENTE 
+WHERE PESO BETWEEN 3 AND 10;
+
+-- 12- Listar pacientes do tutor "Carlos Lima" com peso superior a 5 kg
+SELECT * 
+FROM PACIENTE 
+WHERE id_tutor = (
+    SELECT id_tutor 
+    FROM TUTOR 
+    WHERE nome = 'Carlos Lima'
+)
+AND PESO > 5;
+
+-- 13- Listar pacientes da espécie 'Cão' com peso inferior a 7 kg
+SELECT * 
+FROM PACIENTE 
+WHERE ESPECIE = 'Cão' 
+  AND PESO < 7;
+
+-- 14- Listar agendamentos realizados entre 1º de abril de 2024 e 30 de junho de 2024, mostrando o nome e peso do paciente
+SELECT A.*, P.NOME, P.PESO
+FROM AGENDAMENTO A
+JOIN PACIENTE P ON A.id_paciente = P.id_paciente
+WHERE A.DATA_HORA BETWEEN '2024-04-01' AND '2024-06-30';
+
+-- 15- Listar pacientes que não têm agendamentos registrados
+SELECT * 
+FROM PACIENTE 
+WHERE id_paciente NOT IN (
+    SELECT id_paciente 
+    FROM AGENDAMENTO
+);
+
+-- 16- Listar pacientes que não têm agendamentos registrados no período de 01/01/2024 até 15/01/2024
+SELECT * 
+FROM PACIENTE 
+WHERE id_paciente NOT IN (
+    SELECT id_paciente 
+    FROM AGENDAMENTO 
+    WHERE DATA_HORA BETWEEN '2024-01-01' AND '2024-01-15'
+);
+-- 1- Listar veterinários com especialidade em Dermatologia
+SELECT * 
+FROM VETERINARIO v 
+WHERE v.especialidade = 'Dermatologista';
+
+-- 2- Listar pacientes com idade entre 2 e 5 anos
+SELECT * 
+FROM PACIENTE p 
+WHERE p.idade BETWEEN 2 AND 5;
+
+-- 3- Listar agendamentos entre 1º de janeiro de 2024 e 31 de março de 2024
+SELECT * 
+FROM AGENDAMENTO a 
+WHERE a.DATA_HORA BETWEEN '2024-01-01' AND '2024-03-31';
+
+-- 4- Listar medicamentos com preço superior a 25 reais
+SELECT * 
+FROM MEDICAMENTOS m 
+WHERE m.preco > 25.00;
+
+-- 5- Listar receitas emitidas após 1º de junho de 2024 para o veterinário "Dr. Ana Souza"
+SELECT * 
+FROM RECEITA r 
+WHERE data_emissao > '2024-06-01' 
+  AND id_agendamento IN (
+      SELECT id_agendamento 
+      FROM AGENDAMENTO a 
+      WHERE id_veterinario = (
+          SELECT id_veterinario 
+          FROM VETERINARIO v 
+          WHERE nome = 'Dr. Ana Souza'
+      )
+  );
+
+-- 6- Listar pacientes que pertencem ao tutor "Maria Silva"
+SELECT * 
+FROM PACIENTE p 
+WHERE ID_TUTOR = (
+    SELECT ID_TUTOR 
+    FROM TUTOR t 
+    WHERE NOME = 'Maria Silva'
+);
+
+-- 7- Listar receitas que incluem o medicamento "Anti-inflamatório Y"
+
+SELECT *
+FROM RECEITA r
+WHERE ID_AGENDAMENTO = (
+SELECT ID_AGENDAMENTO 
+FROM MEDICAMENTOS m 
+WHERE nome = 'Anti-inflamatório Y');
+
+-- 9- Listar agendamentos realizados pelo veterinário "Dr. Pedro Lima" e com o motivo "Exame de sangue"
+SELECT * 
+FROM AGENDAMENTO a 
+WHERE ID_VETERINARIO = (
+    SELECT ID_VETERINARIO 
+    FROM VETERINARIO v 
+    WHERE v.nome = 'Dr. Pedro Lima'
+) 
+AND a.MOTIVO = 'Exame de sangue';
+
+-- 10- Listar medicamentos com descrição não nula e preço inferior a 50 reais
+SELECT * 
+FROM MEDICAMENTOS 
+WHERE DESCRICAO IS NOT NULL 
+  AND PRECO < 50.00;
+
+-- 11- Listar pacientes com peso entre 3 e 10 kg
+SELECT * 
+FROM PACIENTE 
+WHERE PESO BETWEEN 3 AND 10;
+
+-- 12- Listar pacientes do tutor "Carlos Lima" com peso superior a 5 kg
+SELECT * 
+FROM PACIENTE 
+WHERE id_tutor = (
+    SELECT id_tutor 
+    FROM TUTOR 
+    WHERE nome = 'Carlos Lima'
+)
+AND PESO > 5;
+
+-- 13- Listar pacientes da espécie 'Cão' com peso inferior a 7 kg
+SELECT * 
+FROM PACIENTE 
+WHERE ESPECIE = 'Cão' 
+  AND PESO < 7;
+
+-- 14- Listar agendamentos realizados entre 1º de abril de 2024 e 30 de junho de 2024, mostrando o nome e peso do paciente
+SELECT A.*, P.NOME, P.PESO
+FROM AGENDAMENTO A
+JOIN PACIENTE P ON A.id_paciente = P.id_paciente
+WHERE A.DATA_HORA BETWEEN '2024-04-01' AND '2024-06-30';
+
+-- 15- Listar pacientes que não têm agendamentos registrados
+SELECT * 
+FROM PACIENTE 
+WHERE id_paciente NOT IN (
+    SELECT id_paciente 
+    FROM AGENDAMENTO
+);
+
+-- 16- Listar pacientes que não têm agendamentos registrados no período de 01/01/2024 até 15/01/2024
+SELECT * 
+FROM PACIENTE 
+WHERE id_paciente NOT IN (
+    SELECT id_paciente 
+    FROM AGENDAMENTO 
+    WHERE DATA_HORA BETWEEN '2024-01-01' AND '2024-01-15'
+);
